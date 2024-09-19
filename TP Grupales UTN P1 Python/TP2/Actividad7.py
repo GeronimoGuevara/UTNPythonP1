@@ -8,12 +8,6 @@ vocales = ["a","e","i","o","u"]
 cadena = input("Ingrese una cadena de texto")
 largo = len(cadena)
 
-
-"""for ["a","e","i","o","u"] in cadena:
-    vocales = vocales + 1
-""" 
-
-
 for i in range(1,largo,1):
     if cadena[i] in vocales :
         cantidad = cantidad + 1

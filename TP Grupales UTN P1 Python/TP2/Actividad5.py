@@ -6,4 +6,3 @@ cadena = str(input("Ingrese un texto para eliminarle los espacios. "))
 cadena_sin_espacios = cadena.replace(" ", "")
 print(cadena_sin_espacios)
 
-
