@@ -1,4 +1,4 @@
-cantidaddefilas = int(input("De cuantas filas quiere hacer la lista? "))
+cantidaddefilas = int(input("De cuantos elementos quiere hacer la lista? "))
 Lista=[None] * cantidaddefilas
 for i in range(len(Lista)):
     Num=int(input(f"ingrese el Numero de la casilla {i} "))
