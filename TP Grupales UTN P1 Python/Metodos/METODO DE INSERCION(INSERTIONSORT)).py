@@ -1,34 +1,18 @@
-from random import sample 
-lista = list(range(100)) 
-vectorins = sample(lista,8)
+#Metodo InsertionSort.....
+lista = [123,4,6,45,234,733,113,112,43,64,87]
+def insertionsort(lista): 
+    print("El vector a ordenar con inserción es:", lista)
+    lenght = len(lista)
+    print("el largo de la lista vectorins == ",lenght)
 
-def insertionsort(vectorins): 
-    """Esta función ordenara el vector que le pases como argumento con
-    el Método Insertion Sort"""
-    print("El vector a ordenar con inserción es:", vectorins)
-    
-    
-    
-    largo = 0 
-     
-
-    for i in vectorins:
-        largo += 1 
-    
-    for i in range(1, largo): 
-    
-        elemento = vectorins[i] 
+    for i in range(1, lenght): 
+        elemento = lista[i] 
         j = i-1
-        while j >= 0 and elemento < vectorins[j] : 
-                vectorins[j+1] = vectorins[j] 
+        while j >= 0 and elemento < lista[j] : 
+                lista[j+1] = lista[j] 
                 j -= 1
-        vectorins[j+1] = elemento 
+        lista[j+1] = elemento 
 
+    print("El vector ordenado con inserción es: ", lista)
 
-
-
-
-        
-    print("El vector ordenado con inserción es: ", vectorins)
-
-insertionsort(vectorins)
+insertionsort(lista)
