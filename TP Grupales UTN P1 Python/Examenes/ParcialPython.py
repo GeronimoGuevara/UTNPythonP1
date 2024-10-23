@@ -1,45 +1,36 @@
 def PedirGolosina(listaCaramelosPedidos,listaCaramelos):
-    codigo = 0
-    cantAPedir = 0
-    codigo = int(input("Ingrese el codigo de la golosina a pedir:"))
-    if codigo in listaCaramelos and listaCaramelos[codigo]["Stock"] != 0:
-        print("El stock de esa golosina es de: ")
-        print(listaCaramelos[codigo])
+    codigo = int(input("Ingrese el codigo de la golosina a pedir: "))
+
+    if codigo in listaCaramelos and listaCaramelos[codigo]["Stock"] > 0:
+        print(f"El stock de {listaCaramelos[codigo]['Nombre']} es de: {listaCaramelos[codigo]['Stock']} unidades")
         cantAPedir = int(input("Ingrese la cantidad que desea extraer: "))
-        if cantAPedir <= listaCaramelos[codigo]["Stock"] and cantAPedir > 0:
+
+        if 0 < cantAPedir <= listaCaramelos[codigo]["Stock"]:
             print(f"Usted extrajo {cantAPedir} golosinas")
-            listaCaramelosPedidos[codigo]["CantPedida"] = listaCaramelosPedidos[codigo]["CantPedida"] + cantAPedir
-            listaCaramelos[codigo]["Stock"] = listaCaramelos[codigo]["Stock"] - listaCaramelosPedidos[codigo]["CantPedida"]
+            listaCaramelosPedidos[codigo]["CantPedida"] += cantAPedir
+            listaCaramelos[codigo]["Stock"] -= cantAPedir
+        else:
+            print("cant invalida verificar stock")
     else:
         print("no hay stock de esa golosina")
 
     return listaCaramelosPedidos,listaCaramelos
 
 def Rellenar(listaCaramelos,claveTecnico):
-    paso11 = input("Ingrese la calve 1 del tecnico: ")
-    if paso11 == claveTecnico[0]:
-        paso22 = input("Ingrese la clave 2 del tecnico ")
-        if paso22 == claveTecnico[1]:
-            paso33 = input("Ingrese la clave 3 del tecnico")
-            if paso33 == claveTecnico[2]:
-                codigo = input("Ingrese el codigo del caramelo a rellenar: ")
-                if codigo in listaCaramelos:
-                    cantArellenar = int(input("Ingrese la cantidad a rellenar: "))
-                    while cantArellenar < 0:
-                        cantArellenar = int(input("Ingrese una cantidad a rellenar mayor a 0: "))
-                    listaCaramelos[codigo]["Stock"] = listaCaramelos[codigo]["Stock"] + cantArellenar
-            else:
-                print("Usted no tiene permiso para ejecutar la recarga.")
-        else:
-            print("Usted no tiene permiso para ejecutar la recarga.")
-    else:
-        print("Usted no tiene permiso para ejecutar la recarga.")
+    for i in range(len(claveTecnico)):
+        clave = input(f"Ingrese la clave {i + 1}° de tecnico para acceder")
+        if clave == claveTecnico[i]:
+            codigo = int(input("Ingrese el codigo de la golosina a rellenar"))
+            if codigo in listaCaramelos:
+                cantArellenar = int(input("Ingrese la cantidad a rellenar: "))
+                while cantArellenar < 0:
+                    cantArellenar = int(input("Ingrese una cantidad a rellenar mayor a 0: "))
+                listaCaramelos[codigo]["Stock"] += cantArellenar
     return listaCaramelos
 
 def FinalizarPrograma(listaCaramelosPedidos):
-    cantTotalPedidos = 0
-    for codigo in listaCaramelosPedidos:
-        cantTotalPedidos = cantTotalPedidos + listaCaramelosPedidos[codigo]["CantPedida"]
+    cantTotalPedidos = sum(item["CantPedida"]for item in listaCaramelosPedidos.values())
+    print(f"la cantidad total de caramelos pedidos es de: {cantTotalPedidos}")
                     
 def Main():
 
@@ -69,44 +60,33 @@ def Main():
     claveTecnico = ("admin","CCCDDD","2020")
 
     listaCaramelosPedidos = {
-        1 : {"Nombre" : "KitKa", "CantPedida" : 0},
-        2 : {"Nombre" :"Chicles", "CantPedida" :0},
-        3 : {"Nombre" :"Caramelos de Menta","CantPedida" : 0},
-        4 : {"Nombre" :"Huevo Kinder","CantPedida" : 0},
-        5 : {"Nombre" :"Chetoos","CantPedida" : 0},
-        6 : {"Nombre" :"Twix" ,"CantPedida" :0},
-        7 : {"Nombre" :"M&MS","CantPedida" : 0},
-        8 : {"Nombre" :"Papas Lays","CantPedida" : 0},
-        9 : {"Nombre" :"Milkybar","CantPedida" : 0},
-        10 : {"Nombre" :"Alfajor Tofi ","CantPedida" :0},
-        11 : {"Nombre" :"Lata Coca", "CantPedida" :0},
-        12 : {"Nombre" :"Chitos ","CantPedida" :0}
+        codigo : {"Nombre" : golosina["Nombre"], "CantPedida" : 0} for codigo , golosina in listaCaramelos.items() 
     }
     while True:
 
-        print(" MENÚ:")
+        print("\n MENÚ:")
         print("1. Pedir Golosina")
         print("2. Mostrar Menu")
         print("3. Rellenar Caramelos")
         print("4. Apagar Maquina ")
-        cantTotalPedida = 0
+
         opcion = int(input("elija una de las opciones"))
         if opcion == 1:
             legajo = input("Ingrese su numero de legajo de empleado: ")
             if legajo in diccionarioEmpleados:
                 print("Usted es empleado puede retirar golosinas")
-                listaCaramelosPedidos = PedirGolosina(listaCaramelosPedidos,listaCaramelos)
+                listaCaramelosPedidos, listaCaramelos = PedirGolosina(listaCaramelosPedidos, listaCaramelos)
             else:
                 print("Usted NO es un empleado")
 
         elif opcion == 2:
-            print("Lista caramelos Disponibles.")
-            for i,lista in listaCaramelos.items():
-                print(i,lista)
+            print(f"\n Lista caramelos Disponibles.")
+            for codigo,golosina in listaCaramelos.items():
+                print(f"{codigo}: {golosina['Nombre']} -Stock: {golosina['Stock']}")
         elif opcion == 3:
-            Rellenar(listaCaramelos,claveTecnico)
+            listaCaramelos = Rellenar(listaCaramelos,claveTecnico)
         elif opcion == 4:
-            print(f"La cantidad total de golosinas pedidas es de: {cantTotalPedida}")
+            FinalizarPrograma(listaCaramelosPedidos)
             print("Finalizando Programa")
             break
         else:

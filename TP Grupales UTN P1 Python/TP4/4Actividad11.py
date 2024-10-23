@@ -80,7 +80,3 @@ while True:
         break
     else:
         print(f"usted ingresó la opción: {opcion} y no es valida.")
-
-    
-
-
