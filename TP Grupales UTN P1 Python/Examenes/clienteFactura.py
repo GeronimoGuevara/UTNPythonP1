@@ -94,7 +94,7 @@ def imprimir_factura():
     print(f"Cliente: {clienteFactura}")
     print("\nCódigo Artículo | Nombre | Cantidad | Precio Unitario | Subtotal")
     for detalle in detallesFactura:
-        print(f"{detalle[0]:<12} {detalle[1]:<10} {detalle[2]:<8} {detalle[3]:<14} {detalle[4]:<8}")
+        print(f"{detalle[0]:<17} {detalle[1]:<8} {detalle[2]:<10} {detalle[3]:<17} {detalle[4]:<8}")
     print(f"\nIVA: {montoIva}")
     print(f"Total: {totalFactura}")
 
