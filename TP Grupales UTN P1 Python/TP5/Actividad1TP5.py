@@ -1,32 +1,55 @@
-"""1. Codifique la clase celda con los atributos: 
-fila; //entero 
-columna; //entero 
-valor; //cadena 
- Crea una clase Matriz que contenga una variable celdas 
-celdasMatriz = []; 
- Codifique un programa que solicite al usuario un valor para la celda y que solicite la 
-posición donde se desea almacenar el valor, cree una instancia de la clase Celda, 
-asigne los valores cargados por el usuario (fila, columna y valor) y agregue la 
-instancia a la lista celdasMatriz; repita este proceso hasta que el usuario ingrese 
-como valor la cadena “FIN”. Valide que la celda creada ya no exista anteriormente 
-es decir si la fila y columna indicados ya fueron cargados en celdasMatriz. 
- Muestre por pantalla los valores cargados en la lista celdas.  
- Codifique un método que reciba como parámetro los valores fila y columna y 
-retorne el valor almacenado en la Celda correspondiente, en caso de que la fila y la 
-columna no exista retorne el mensaje “La fila y columna indicada no ha sido 
-asignada en ninguna celda”"""
-class Coche: 
-    def __init__(self, marca, modelo, velocidad_maxima): 
-        self.marca = marca 
-        self.__modelo = modelo  # Atributo privado 
-        self._velocidad_maxima = velocidad_maxima  # Atributo protegido 
- 
-    def mostrar_modelo(self): 
-        print(f"El modelo es {self.__modelo}") 
+class Celda:
+    def __init__(self,fila,columna,valor):
+        self.fila = fila
+        self.columna = columna
+        self.valor = valor
 
- 
-# Instanciando la clase 
-mi_coche = Coche("Toyota", "Corolla", 180) 
-mi_coche.mostrar_modelo()  # "El modelo es Corolla" 
-# Intentar acceder directamente al atributo privado genera un error: 
-print(mi_coche._velocidad_maxima)  # AttributeError 
+    def mostrarValor (self):
+        print(f"El valor ingresado es: {self.valor} en la fila {self.fila} y en la columna {self.columna}")
+
+class Matriz():
+    def __init__(self):
+        self.celdasMatriz = []
+
+    def agregarCelda(self,nuevaCelda):
+        for celda in self.celdasMatriz:
+            if celda.fila == nuevaCelda.fila and celda.columna == nuevaCelda.columna:
+                print("Ya existe una celda en esa posicion")
+                return False
+        self.celdasMatriz.append(nuevaCelda)
+        return True
+    
+    def mostrarMatriz(self):
+        for celda in self.celdasMatriz:
+            celda.mostrarValor()
+
+    def obtenerValor (self,fila,columna):
+        for celda in self.celdasMatriz:
+            if celda.fila == fila and celda.columna == columna:
+                return celda.valor
+        return "La fila y columna no ha sido asignada"
+
+matriz = Matriz()
+
+while True:
+    valor = input("Ingrese el valor que va a ingresar en la matriz (fin para finalizar)").upper()    
+    if valor == "FIN":
+        break
+    
+    fila = int(input("Ingrese la fila en la que lo va a posicionar a ese valor"))
+    columna = int(input("Ingrese la columna en que lo ingresara"))
+
+    nuevaCelda = Celda(fila,columna,valor)
+
+    if matriz.agregarCelda(nuevaCelda):
+        print("Celda agregada correctamente")
+
+print("\n Celdas cargadas en la matriz: ")
+matriz.mostrarMatriz()
+
+fila = int(input("\n Ingrese la fila para consultar el valor: "))
+columna = int(input("Ingrese la columna para consultar el valor: "))
+resultado = matriz.obtenerValor(fila,columna)
+print(f"Resultado de la consulta: {resultado}")
+
+
