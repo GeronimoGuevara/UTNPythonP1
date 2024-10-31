@@ -15,11 +15,13 @@ class Alumno(Nota):
     def agregarNotas(self, catedra, notaExamen):
         self.notas.agregarNotas(catedra, notaExamen)
 
-    def agregarAlDiccionario(self):
+    def agregarAlDiccionario(self,promedio):
+        self.promedio = promedio
         infoAlumno = {
             "nombre" : self.nombreCompleto, 
             "Legajo" : self.legajo, 
-            "Notas" : self.notas.materiaNota
+            "Notas" : self.notas.materiaNota,
+            "promedio" : self.promedio
         }
         return infoAlumno        
 
@@ -51,15 +53,16 @@ class CargaNotas:
                 alumno.agregarNotas(catedra,nota)
                 sumanotas += nota
 
-            self.alumnos.append(alumno.agregarAlDiccionario())
-
             promedio = sumanotas / cantNotas
 
+            self.alumnos.append(alumno.agregarAlDiccionario(promedio))
+            
         print("Carga finalizada. Lista de alumnos: ")
         for i in self.alumnos:
             print(f"\nNombre del alumno: {i['nombre']}\nLegajo del alumno: {i['Legajo']}")
             for nota in i['Notas']:
                 print(f"Materia: {nota['Catedra']}, Nota: {nota['Nota Examen']}")
+            print("El promedio del alumno es de: ",i['promedio'])
 
 if __name__ == "__main__":
     CargaNotas()
