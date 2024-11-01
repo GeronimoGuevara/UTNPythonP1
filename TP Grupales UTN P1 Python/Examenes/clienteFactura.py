@@ -1,6 +1,4 @@
-# calculoFactura.py
 
-# Atributos Globales de la Factura
 fechaFactura = ""
 numeroFactura = 0
 letraFactura = ""
@@ -9,7 +7,6 @@ montoIva = 0.0
 clienteFactura = ""
 detallesFactura = []
 
-# Lista de Artículos
 articulos = [
     [101, "Leche", 250],
     [102, "Gaseosa", 300],
@@ -23,7 +20,6 @@ articulos = [
     [110, "Galletas", 600]
 ]
 
-# Diccionario de Clientes
 clientes = {
     "20110425417": "Rodolfo Fernandez",
     "30527419655": "Los Pollos Hnos",
@@ -32,7 +28,6 @@ clientes = {
     "20291122568": "Luis Peric"
 }
 
-# Funciones necesarias
 def solicitar_datos_factura():
     global fechaFactura, numeroFactura
     fechaFactura = input("Ingrese la fecha de la factura: ")
@@ -98,7 +93,6 @@ def imprimir_factura():
     print(f"\nIVA: {montoIva}")
     print(f"Total: {totalFactura}")
 
-# Ejecución del programa
 solicitar_datos_factura()
 cuit = obtener_cliente()
 agregar_articulo()
